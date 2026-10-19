@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Food People: Website Questionnaire</title>
+<meta name="description" content="A short questionnaire for Laurie to shape the new The Food People website. Mostly taps, and it saves as you go.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0F4C3A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Food People: Website Questionnaire">
+<meta property="og:description" content="Laurie, your answers will shape the new The Food People website. Mostly taps, and it saves as you go.">
+<meta property="og:site_name" content="The Food People">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Food People: Website Questionnaire">
+<meta name="twitter:description" content="Laurie, your answers will shape the new The Food People website. Mostly taps, and it saves as you go.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F4C3A'/%3E%3Ctext x='32' y='42' font-family='Arial,Helvetica,sans-serif' font-size='26' font-weight='800' fill='%23F5B041' text-anchor='middle'%3ETFP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+/*
+  The Food People questionnaire.
+  Palette matches the TFP growth strategy deck (forest green, gold, ink).
+  Shape system: buttons and multi-select chips are full pill; option cards,
+  inputs and panels use 14px. Accent for actions and selection is green; gold
+  is reserved for the brand mark and the current-step marker.
+*/
+:root {
+  --bg: #FFFFFF;
+  --paper: #FDFBF7;
+  --surface: #FFFFFF;
+  --ink: #1A2521;
+  --muted: #56625C;
+  --line: #DCE3DF;
+  --line-strong: #B9C6BF;
+  --green: #115E36;
+  --green-deep: #0F4C3A;
+  --accent-text: #115E36;
+  --mint: #EEF5F0;
+  --gold: #F5B041;
+  --on-green: #FFFFFF;
+  --on-deep-muted: #C9D3CE;
+  --focus: #0F4C3A;
+  --danger: #A12C1F;
+  --shadow: 0 1px 2px rgba(15, 76, 58, 0.06), 0 8px 24px rgba(15, 76, 58, 0.06);
+  --radius: 14px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0E1512;
+    --paper: #121B17;
+    --surface: #16211C;
+    --ink: #E9F0EC;
+    --muted: #A7B5AE;
+    --line: #26342D;
+    --line-strong: #3A4B42;
+    --green: #1F7A4A;
+    --green-deep: #0B3A2B;
+    --accent-text: #8FD6AE;
+    --mint: #173126;
+    --on-deep-muted: #B9C8C0;
+    --focus: #F5B041;
+    --danger: #F08A7E;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -48px; background: var(--green); color: var(--on-green); padding: 10px 16px; border-radius: 999px; z-index: 30; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+/* App shell */
+.app { min-height: 100dvh; display: grid; grid-template-columns: 1fr; }
+.side { display: none; }
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 20px 10px;
+}
+.topbar-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wordmark { font-weight: 800; letter-spacing: -0.01em; font-size: 15px; color: var(--ink); }
+.wordmark span { color: var(--accent-text); }
+.meta { font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: center; white-space: nowrap; }
+.saved { color: var(--accent-text); font-weight: 600; opacity: 0; transition: opacity 0.3s var(--ease); }
+.saved.show { opacity: 1; }
+.bar { height: 4px; border-radius: 999px; background: var(--line); margin-top: 10px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 100%; background: var(--green); transform-origin: left center; transform: scaleX(0); transition: transform 0.5s var(--ease); }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.content { width: 100%; max-width: 720px; margin: 0 auto; padding: 28px 20px 140px; }
+.screen { animation: enter 0.45s var(--ease) both; }
+.screen.leaving { animation: leave 0.18s ease-in both; }
+@keyframes enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes leave { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-8px); } }
+
+h1.title { font-size: clamp(28px, 6vw, 40px); line-height: 1.12; letter-spacing: -0.025em; font-weight: 800; margin: 0 0 10px; }
+h1[tabindex]:focus { outline: none; }
+.lede { color: var(--muted); font-size: 17px; margin: 0 0 28px; max-width: 60ch; }
+
+/* Questions */
+.q { border: 0; margin: 0 0 30px; padding: 0; min-width: 0; }
+.q[hidden] { display: none; }
+.q.reveal { animation: enter 0.4s var(--ease) both; }
+.q legend, .q .qlabel { display: block; font-weight: 700; font-size: 18px; line-height: 1.35; letter-spacing: -0.01em; margin: 0 0 6px; padding: 0; }
+.hint { color: var(--muted); font-size: 14.5px; margin: 0 0 12px; max-width: 62ch; }
+.q .qlabel + .control, .q legend + .control { margin-top: 12px; }
+
+.options { display: grid; gap: 10px; }
+.opt { position: relative; display: block; cursor: pointer; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opt .card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; min-height: 54px;
+  background: var(--surface); border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), transform 0.12s var(--ease);
+}
+.opt .card::before {
+  content: ""; flex: none; width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--line-strong); background: var(--surface);
+  transition: box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.opt:hover .card { border-color: var(--line-strong); }
+.opt:active .card { transform: scale(0.985); }
+.opt input:checked + .card { border-color: var(--green); background: var(--mint); }
+.opt input:checked + .card::before { border-color: var(--green); box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 10px var(--green); }
+.opt input:focus-visible + .card { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip span {
+  display: inline-flex; align-items: center; gap: 0;
+  padding: 11px 16px; min-height: 46px;
+  border: 1.5px solid var(--line); border-radius: 999px;
+  background: var(--surface); font-weight: 500; font-size: 15.5px; line-height: 1.3;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease), transform 0.12s var(--ease);
+}
+.chip span::before {
+  content: ""; width: 0; height: 11px; border: solid transparent; border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-2px); margin-right: 0;
+  transition: width 0.2s var(--ease), margin 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.chip:hover span { border-color: var(--line-strong); }
+.chip:active span { transform: scale(0.97); }
+.chip input:checked + span { border-color: var(--green); background: var(--green); color: var(--on-green); }
+.chip input:checked + span::before { width: 6px; border-color: var(--on-green); margin-right: 10px; }
+.chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.other { margin-top: 10px; }
+.other[hidden] { display: none; }
+
+.field { display: grid; gap: 6px; }
+.fields { display: grid; gap: 14px; }
+.field label { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.text, .area {
+  width: 100%; padding: 13px 14px; font-size: 16px;
+  background: var(--surface); color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: var(--radius);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.area { min-height: 108px; resize: vertical; line-height: 1.5; }
+.text::placeholder, .area::placeholder { color: color-mix(in srgb, var(--muted) 88%, transparent); }
+.text:hover, .area:hover { border-color: var(--line-strong); }
+.text:focus, .area:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 22%, transparent); }
+
+.unsure { margin-top: 10px; display: inline-flex; }
+.toggle {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  border: 1.5px dashed var(--line-strong); background: transparent; color: var(--muted);
+  border-radius: 999px; padding: 8px 14px; font-size: 14px; font-weight: 600;
+  transition: all 0.2s var(--ease);
+}
+.toggle[aria-pressed="true"] { border-style: solid; border-color: var(--green); color: var(--accent-text); background: var(--mint); }
+
+.matrix { display: grid; gap: 10px; }
+.mrow { display: grid; gap: 8px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.mrow .mlabel { font-weight: 600; font-size: 15.5px; }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.seg label { position: relative; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg span {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  min-height: 42px; padding: 6px 8px; border-radius: 999px; font-size: 14px; font-weight: 600;
+  border: 1.5px solid var(--line); color: var(--muted); background: var(--bg);
+  transition: all 0.2s var(--ease);
+}
+.seg input:checked + span { background: var(--green); border-color: var(--green); color: var(--on-green); }
+.seg input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* Footer nav */
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-top: 1px solid var(--line);
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+}
+.nav-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 10px; justify-content: space-between; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1.5px solid transparent;
+  font-weight: 700; font-size: 16px; cursor: pointer; white-space: nowrap; text-decoration: none;
+  transition: transform 0.12s var(--ease), background-color 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s;
+}
+.btn:active { transform: translateY(1px) scale(0.985); }
+.btn-primary { background: var(--green); color: var(--on-green); }
+.btn-primary:hover { background: var(--green-deep); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-gold { background: var(--gold); color: #1A2521; }
+.btn-gold:hover { background: #E9A332; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn i { font-size: 20px; }
+.nav .spacer { flex: 1; }
+.linkbtn { background: none; border: 0; padding: 6px 2px; color: var(--accent-text); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Welcome */
+.welcome { display: grid; min-height: 100dvh; grid-template-columns: 1fr; }
+.welcome-hero { padding: 40px 24px 32px; display: flex; flex-direction: column; justify-content: center; background: var(--paper); }
+.welcome-hero .wordmark { font-size: 16px; margin-bottom: 36px; }
+.welcome-hero h1 { font-size: clamp(36px, 8vw, 60px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 16px; max-width: 13ch; }
+.welcome-hero h1 em { font-style: normal; color: var(--accent-text); }
+.welcome-hero h1 .punct { margin-left: -0.07em; }
+.welcome-hero p.sub { font-size: 18px; color: var(--muted); max-width: 40ch; margin: 0 0 28px; }
+.welcome-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.welcome-side { background: var(--green-deep); color: #FFFFFF; padding: 32px 24px 40px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.welcome-side .hero-img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.expect { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.expect li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+.expect i { font-size: 24px; color: var(--gold); margin-top: 1px; }
+.expect strong { display: block; font-size: 16.5px; margin-bottom: 2px; }
+.expect span { color: var(--on-deep-muted); font-size: 15px; }
+.prepared { color: var(--on-deep-muted); font-size: 13.5px; border-top: 1px solid rgba(255, 255, 255, 0.14); padding-top: 18px; }
+.prepared strong { color: #FFFFFF; font-weight: 700; }
+
+/* Gate */
+.gate-actions { display: grid; gap: 12px; margin-top: 8px; }
+.gate-card { padding: 22px; border-radius: var(--radius); background: var(--paper); border: 1.5px solid var(--line); margin-bottom: 18px; }
+.gate-card ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+
+/* Review */
+.rsec { padding: 18px 0 20px; border-top: 1px solid var(--line); }
+.rsec:first-of-type { border-top: 0; padding-top: 4px; }
+.rhead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.rhead h2 { font-size: 18px; margin: 0; letter-spacing: -0.01em; }
+.ritem { padding: 8px 0; }
+.ritem .rq { font-size: 14px; color: var(--muted); }
+.ritem .ra { font-weight: 600; white-space: pre-line; overflow-wrap: anywhere; }
+.rnone { color: var(--muted); font-size: 14.5px; font-style: italic; }
+.error { color: var(--danger); font-weight: 600; margin: 12px 0 0; }
+
+/* Thanks */
+.thanks-mark { width: 64px; height: 64px; border-radius: 50%; background: var(--mint); color: var(--accent-text); display: grid; place-items: center; margin-bottom: 22px; }
+.thanks-mark i { font-size: 34px; }
+.notice { padding: 16px 18px; border-radius: var(--radius); background: var(--paper); border: 1.5px solid var(--line); margin: 0 0 24px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.status { font-size: 14.5px; color: var(--accent-text); font-weight: 600; min-height: 22px; margin-top: 12px; }
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .app.with-side { grid-template-columns: 340px 1fr; }
+  .app.with-side .side {
+    display: flex; flex-direction: column; gap: 28px;
+    position: sticky; top: 0; height: 100dvh; overflow-y: auto;
+    background: var(--green-deep); color: #FFFFFF; padding: 36px 30px;
+  }
+  .app.with-side .topbar { display: none; }
+  .side .wordmark { color: #FFFFFF; font-size: 17px; }
+  .side .wordmark span { color: var(--gold); }
+  .side .subtitle { color: var(--on-deep-muted); font-size: 14px; margin-top: 4px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .steps li button {
+    width: 100%; text-align: left; background: none; border: 0; cursor: pointer;
+    color: var(--on-deep-muted); padding: 9px 12px 9px 14px; border-radius: 10px;
+    display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500;
+    border-left: 3px solid transparent;
+  }
+  .steps li button:hover:not([disabled]) { background: rgba(255, 255, 255, 0.06); color: #FFFFFF; }
+  .steps li button[disabled] { cursor: default; opacity: 0.55; }
+  .steps li button[aria-current="step"] { color: #FFFFFF; font-weight: 700; border-left-color: var(--gold); background: rgba(255, 255, 255, 0.07); border-radius: 0 10px 10px 0; }
+  .steps li button .tick { width: 18px; flex: none; color: var(--gold); font-size: 16px; }
+  .steps li.optional button { font-style: normal; }
+  .side-foot { margin-top: auto; display: grid; gap: 10px; }
+  .side-foot .bar { background: rgba(255, 255, 255, 0.14); margin: 0; }
+  .side-foot .bar > i { background: var(--gold); }
+  .side-foot .meta { color: var(--on-deep-muted); }
+  .side-foot .saved { color: var(--gold); }
+  .side-foot .prepared { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+  .content { padding: 64px 56px 150px; }
+  .app.with-side .nav { left: 340px; }
+  .nav-inner { max-width: 608px; }
+  .options.two { grid-template-columns: 1fr 1fr; }
+  .mrow { grid-template-columns: 1fr 320px; align-items: center; }
+  .welcome { grid-template-columns: 1.15fr 0.85fr; }
+  .welcome-hero { padding: 72px 72px 64px; }
+  .welcome-side { padding: 64px 56px; }
+  .gate-actions { grid-template-columns: auto auto; justify-content: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to the questions</a>
+<div id="root"></div>
+<noscript><p style="padding:24px">This questionnaire needs JavaScript. Please open it in Chrome or Safari, or ask Benedict for the PDF version.</p></noscript>
+
+<script>
+/* ------------------------------------------------------------------
+   Settings for Benedict. See README.md.
+   One Web3Forms access key per inbox. Each key only sends to the email
+   it was created with, so the form posts to every real key in parallel.
+------------------------------------------------------------------- */
+const WEB3FORMS_KEYS = ["cfce4ba6-a513-4531-b23a-7502a7bb845f", "REPLACE_ME_SECOND"];
+const BENEDICT_WHATSAPP = ""; // Country code and number, digits only, e.g. "233241234567". Empty hides the button.
+const HERO_IMAGE = "";        // Optional: URL or relative path of one of Laurie's food photos for the welcome screen.
+const STORAGE_KEY = "tfp-questionnaire-v1";
+const EMAIL_SUBJECT = "The Food People: website questionnaire from Laurie";
+
+/* ------------------------------------------------------------------
+   Questions
+------------------------------------------------------------------- */
+const DAILY_LIMIT_YES = ["Yes, set a daily limit", "Yes, but I want to override it"];
+const DEPOSIT = "Deposit, then the balance before the event";
+const OPEN_TO_NEW_NAME = "Yes, I own it, but I'm open to a new name";
+
+const CORE = [
+  { id: "business", title: "Your business today", nav: "Your business", intro: "Start with the kitchen. How things run right now.", questions: [
+    { id: "services", type: "multi", q: "Which services does The Food People offer today, or want to offer?", hint: "Tick all that apply.", other: true,
+      options: ["Weddings", "Funerals", "Private events and parties", "Meal prep (weekly meals)", "Gift boxes", "Single orders (individual meals)", "Party trays and small chops", "Drinks (e.g. sobolo, juices)", "Corporate catering (a goal)", "Not sure"] },
+    { id: "known_for", type: "long", q: "Which dishes or products are you best known for?", placeholder: "The dishes people ask for again and again" },
+    { id: "area", type: "long", q: "Which area are you based in, and which areas do you deliver to?", placeholder: "e.g. based in Dansoman, deliver across Accra" },
+    { id: "orders_week", type: "single", q: "Roughly how many orders do you handle in a typical week?", two: true,
+      options: ["Under 5", "5 to 15", "15 to 30", "More than 30", "Varies a lot", "Not sure"] },
+    { id: "goals", type: "long", q: "What are your top three goals for The Food People over the next 12 months?", placeholder: "1.\n2.\n3." }
+  ]},
+  { id: "site", title: "Your current website", nav: "Your current website", intro: "thefoodpeople.shop is a good start. Tell me what to keep and what to fix.", questions: [
+    { id: "site_built", type: "fields", q: "Who built thefoodpeople.shop, and what does it run on?", hint: "Fill in what you know. Blank is fine.",
+      fields: [{ label: "Built by" }, { label: "Platform or tool, if you know" }, { label: "Who can log in and change it" }] },
+    { id: "domain", type: "single", q: "Do you own the thefoodpeople.shop web address, and do you want to keep it?",
+      options: ["Yes, I own it and want to keep it", OPEN_TO_NEW_NAME, "I'm not sure who owns it", "Not sure"] },
+    { id: "site_frustrations", type: "long", q: "What frustrates you about the current site, or what's missing?" },
+    { id: "daily_orders", type: "single", q: "Should the new site keep “daily orders”?", hint: "Daily meals for pickup or delivery in Accra.",
+      options: ["Yes, keep it front and centre", "Keep it, alongside events and bigger orders", "Replace it with set pre-order days", "Not sure"] }
+  ]},
+  { id: "customers", title: "Your customers", nav: "Your customers", intro: "Who orders now, and who you want more of.", questions: [
+    { id: "who_orders", type: "multi", q: "Who orders from you today?", other: true,
+      options: ["Individuals ordering for themselves", "Families", "Party and event hosts", "Churches and groups", "Event planners", "Diaspora visiting or sending food home", "Not sure"] },
+    { id: "want_more", type: "multi", q: "Which customers do you most want more of?", other: true,
+      options: ["Corporate clients", "Weddings and funerals", "Private events", "Meal prep subscribers", "Gift box buyers", "Single orders, if batched", "Not sure"] },
+    { id: "rather_not", type: "long", q: "Is there any type of order you'd rather not take? Why?" }
+  ]},
+  { id: "menu", title: "Your menu", nav: "Your menu", intro: "How the food should appear, and what you need to know before you cook.", questions: [
+    { id: "prices", type: "single", q: "How should prices appear on the website?",
+      options: ["Full menu with prices", "“From” prices, final price confirmed", "No prices, quote on request", "Prices for single orders, quotes for events", "Not sure"] },
+    { id: "formats", type: "multi", q: "Which formats do you sell, or want to sell?", other: true,
+      options: ["Single portions or packs", "Combo meals", "Party trays (small, medium, large)", "Per-head event packages", "Office lunch packages (e.g. lunch for 20)", "Gift boxes", "Weekly meal prep plans", "Custom quotes only", "Not sure"] },
+    { id: "notice", type: "fields", q: "How much notice do you need before an order?", hint: "e.g. 24 hours, 3 days, 2 weeks.",
+      fields: [{ label: "Single orders" }, { label: "Party trays and gift boxes" }, { label: "Meal prep" }, { label: "Weddings, funerals and big events" }] },
+    { id: "minimum", type: "fields", q: "Is there a minimum order?", hint: "A minimum keeps small orders worth your time.",
+      fields: [{ label: "Single orders (GHS or number of packs)" }, { label: "For delivery" }, { label: "Events (guests or GHS)" }] }
+  ]},
+  { id: "orders", title: "How orders reach you", nav: "How orders work", intro: "Let's talk about how orders reach you, and how to protect your time.", questions: [
+    { id: "order_mode", type: "single", q: "How should customers order through the website?",
+      options: ["Order and pay online straight away", "Place an order, then I confirm before they pay", "Send a request, then I follow up on WhatsApp", "A mix: pay online for single orders, request a quote for events", "Not sure"] },
+    { id: "batching", type: "single", q: "Would you like single orders grouped into set cooking days?", hint: "For example: “Order by Wednesday for Friday delivery”. Cooking once for many orders saves time and protects your margin.",
+      options: ["Yes, this would help a lot", "Maybe, let's discuss", "No, any day is fine", "Not sure"] },
+    { id: "schedule", type: "long", q: "Which days and times do you want to take orders, cook and deliver?", placeholder: "e.g. take orders Mon to Wed, cook Thu, deliver Fri and Sat" },
+    { id: "daily_limit", type: "single", q: "Should the website stop taking orders once you're fully booked for a day?",
+      options: [...DAILY_LIMIT_YES, "No", "Not sure"] },
+    { id: "capacity", type: "fields", q: "Roughly how much can you handle in one day?", showIf: (a) => DAILY_LIMIT_YES.includes(a.daily_limit),
+      fields: [{ label: "Single orders or packs per day" }, { label: "Events per day or per weekend" }] },
+    { id: "delivery", type: "multi", q: "How should orders reach customers?", hint: "Listing on Bolt Food or Yango is a later step, by choice. This is only about getting each order to the customer.", other: true,
+      options: ["Our own rider", "A Bolt or Yango rider booked per order", "Customer sends their own rider", "Pickup from us", "Not sure"] },
+    { id: "delivery_fees", type: "single", q: "How should delivery fees work?", two: true,
+      options: ["One flat fee", "Fee by area", "Fee by distance", "Customer pays the rider directly", "Free delivery above an amount", "Not sure"] }
+  ]},
+  { id: "events", title: "Events and bigger orders", nav: "Events and bigger orders", intro: "Weddings, parties, and the corporate work you're going after.", questions: [
+    { id: "promote", type: "multi", q: "Which event services should the website promote?", other: true,
+      options: ["Weddings", "Funerals", "Private parties", "One-off office lunches", "Recurring office lunches", "Product and company launches", "Staff parties and end-of-year events", "Corporate gift boxes and hampers", "Not sure"] },
+    { id: "enquiry", type: "multi", q: "How should an event host or company get in touch through the site?", other: true,
+      options: ["Enquiry form", "Book a call", "Download a menu (PDF)", "WhatsApp button", "Instant price estimate (per head)", "Not sure"] },
+    { id: "event_pay", type: "multi", q: "How should event clients pay?", other: true,
+      options: [DEPOSIT, "Full payment upfront", "Payment after the event", "Invoice with payment terms (e.g. 30 days)", "Not sure"] },
+    { id: "deposit", type: "fields", q: "Deposit details", showIf: (a) => Array.isArray(a.event_pay) && a.event_pay.includes(DEPOSIT),
+      fields: [{ label: "Deposit (% of the total)" }, { label: "Balance due (when?)" }] }
+  ]},
+  { id: "payments", title: "Getting paid", nav: "Getting paid", intro: "Whether the site takes payment, and when.", questions: [
+    { id: "process_payments", type: "single", q: "Should the website take payments?",
+      options: ["Yes, for all orders", "Yes, for some (e.g. single orders and deposits)", "No, I'll take payment outside the site", "Not sure, I'd like your advice"] },
+    { id: "methods", type: "multi", q: "Which payment methods should customers be able to use?", other: true,
+      options: ["MTN Mobile Money", "Telecel Cash", "AT Money", "Visa and Mastercard (Ghana cards)", "International cards (diaspora paying from abroad)", "Bank transfer", "Cash on delivery", "Not sure"] },
+    { id: "single_pay_when", type: "single", q: "When should single-order customers pay?",
+      options: ["In full before we start cooking", "Deposit first, balance on delivery", "On delivery", "Not sure"] },
+    { id: "registered", type: "single", q: "Is The Food People a registered business?", hint: "Payment providers such as Paystack and Hubtel usually ask for business registration and an account in the business name before they pay out.",
+      showIf: (a) => typeof a.process_payments === "string" && !a.process_payments.startsWith("No"),
+      options: ["Yes, sole proprietorship", "Yes, limited company", "Registration in progress", "Not yet", "Not sure"] },
+    { id: "accounts_have", type: "multi", q: "Which of these do you already have?",
+      showIf: (a) => typeof a.process_payments === "string" && !a.process_payments.startsWith("No"),
+      options: ["Business bank account", "MoMo merchant account", "Paystack account", "Hubtel account", "Another payment provider", "None yet"] },
+    { id: "refunds", type: "long", q: "What's your cancellation and refund policy?", help: "I don't have one yet. Please help me write one." }
+  ]},
+  { id: "day", title: "Running the day", nav: "Running the day", intro: "The tools that take admin off you and your mum.", questions: [
+    { id: "dashboard_users", type: "multi", q: "Who will use the order dashboard?", other: true,
+      options: ["Me", "My mum", "Future staff", "Delivery rider"] },
+    { id: "roles", type: "single", q: "Should different people see different things?", hint: "For example, your mum sees the cooking list but not the money.",
+      showIf: (a) => selectedCount(a, "dashboard_users") > 1, options: ["Yes", "No", "Not sure"] },
+    { id: "alerts", type: "multi", q: "How do you want to hear about new orders?", other: true,
+      options: ["WhatsApp", "SMS", "Email", "Phone notification", "A call for big orders"] },
+    { id: "tools", type: "multi", q: "Which tools would help you most?", other: true,
+      options: ["Daily prep list (total of each dish)", "Ingredient shopping list", "Delivery list with addresses", "Customer list with order history", "Weekly and monthly sales summary", "Expense tracking", "Calendar of upcoming events"] },
+    { id: "pain", type: "long", q: "What's the most frustrating part of handling orders today?" }
+  ]},
+  { id: "growth", title: "Growing it", nav: "Growing it", intro: "Your friends already send you most of your orders. Let's build on that.", questions: [
+    { id: "socials", type: "fields", q: "Which accounts should the website link to?", hint: "Correct or add handles. Leave blank if you don't have one.",
+      fields: [{ label: "Instagram", value: "@the_foodpeoplee" }, { label: "TikTok" }, { label: "Facebook", value: "the_food_peoplee" }, { label: "WhatsApp Business number", value: "0538030065" }, { label: "Other" }] },
+    { id: "growth_features", type: "multi", q: "Which of these would you like on the site?", other: true,
+      options: ["Referral codes that reward the person who refers", "Discount and promo codes", "Loyalty rewards (e.g. 10th order free)", "Customer reviews and ratings", "Sign-up for offers by WhatsApp or email", "Instagram or TikTok feed", "Recipes, tips and stories", "Seasonal menus (Christmas, Easter)", "Not sure"] },
+    { id: "referral_reward", type: "long", q: "What reward would feel right when someone refers a friend?", placeholder: "e.g. free drink, GHS 20 off their next order" }
+  ]},
+  { id: "brand", title: "Look and feel", nav: "Look and feel", intro: "How the site should look and sound.", questions: [
+    { id: "logo", type: "single", q: "Do you have a logo?", two: true,
+      options: ["Yes, and it's final", "Yes, but I'd like a refresh", "No", "Not sure"] },
+    { id: "three_words", type: "short", q: "Which three words should describe how The Food People feels?", placeholder: "e.g. warm, generous, homemade" },
+    { id: "inspiration", type: "long", q: "Which websites or brands do you like the look of?", hint: "Food or otherwise. Links are perfect." },
+    { id: "new_domain", type: "short", q: "Any ideas for a new web address?", showIf: (a) => a.domain === OPEN_TO_NEW_NAME, placeholder: "e.g. thefoodpeople.com.gh" },
+    { id: "photos_share", type: "single", q: "How would you like to share your logo and food photos?", hint: "Good photos of your food will do more for the site than anything else.",
+      options: ["I'll send them on WhatsApp", "I'll email them", "I'll share a Google Drive link", "We need a photo shoot", "Not sure"] },
+    { id: "photos_link", type: "short", q: "Paste the Google Drive link here", showIf: (a) => a.photos_share === "I'll share a Google Drive link", placeholder: "https://drive.google.com/..." }
+  ]},
+  { id: "practical", title: "The practical bits", nav: "The practical bits", intro: "Devices, updates and paperwork.", questions: [
+    { id: "devices", type: "multi", q: "What will you use to manage the website?",
+      options: ["Android phone", "iPhone", "Laptop", "Tablet"] },
+    { id: "self_update", type: "single", q: "Do you want to update the menu, prices and photos yourself?",
+      options: ["Yes, I want full control", "Sometimes, for small changes", "I'd prefer Benedict to handle it", "Not sure"] },
+    { id: "fda", type: "single", q: "Is the business registered with the Food and Drugs Authority (FDA), or does it hold a food hygiene permit?", two: true,
+      options: ["Yes", "In progress", "No", "Not sure if it's needed"] }
+  ]},
+  { id: "timing", title: "Timing and priorities", nav: "Timing and priorities", intro: "What matters most at launch.", questions: [
+    { id: "go_live", type: "single", q: "When would you like the website live?",
+      options: ["Within 2 weeks", "Within a month", "Before December", "No rush", "In time for a specific event"] },
+    { id: "go_live_event", type: "short", q: "Which event or date should it be ready for?", showIf: (a) => a.go_live === "In time for a specific event" },
+    { id: "running_costs", type: "single", q: "The site will have small running costs (domain, hosting, messages, payment fees). What monthly amount feels comfortable?",
+      options: ["Under GHS 200", "GHS 200 to 500", "GHS 500 to 1,000", "More than GHS 1,000", "Not sure"] },
+    { id: "priorities", type: "matrix", q: "How important is each feature at launch?", hint: "One tap per row. Skip any you're unsure about.",
+      cols: ["Must have", "Nice to have", "Not needed"],
+      rows: ["Online menu", "Online ordering", "Online payments", "Event and corporate enquiry form", "Quotes and invoices", "Order dashboard", "WhatsApp order alerts", "Set cooking days (batching)", "Daily order limit", "Delivery areas and fees", "Customer accounts", "Referral codes", "Promo codes", "Reviews", "Prep and shopping lists", "Sales reports", "Gallery of past events", "Instagram or TikTok feed"] },
+    { id: "one_thing", type: "long", q: "If the website could do only one thing brilliantly at launch, what should it be?" }
+  ]}
+];
+
+const DEEP = [
+  { id: "deep_business", title: "More on the business and current site", nav: "Business and site", deep: true, intro: "A few more details about how things run today.", questions: [
+    { id: "cook_where", type: "single", q: "Where do you cook?", other: true, options: ["Home kitchen", "Commercial or rented kitchen", "Both", "Not sure"] },
+    { id: "team", type: "multi", q: "Who works in the business today?", other: true, options: ["Me", "My mum", "Family on busy days", "Paid helpers sometimes", "Delivery riders"] },
+    { id: "find_you", type: "multi", q: "How do new customers find you today?", other: true,
+      options: ["Referrals from friends", "Past customers recommending us", "Instagram", "TikTok", "WhatsApp status", "At events we cater", "Google search", "Not sure"] },
+    { id: "order_mix", type: "fields", q: "Roughly what share of orders comes from each type?", hint: "A rough guess is fine.",
+      fields: [{ label: "Single orders (%)" }, { label: "Events: weddings, funerals, parties (%)" }, { label: "Meal prep and gift boxes (%)" }, { label: "Other (%)" }] },
+    { id: "site_in_use", type: "single", q: "Is thefoodpeople.shop in use today?", options: ["Yes, customers order through it", "Yes, but it's rarely used", "No", "Not sure"] },
+    { id: "channel_share", type: "fields", q: "Roughly what share of orders comes through each channel?",
+      fields: [{ label: "The website (%)" }, { label: "WhatsApp and phone calls (%)" }, { label: "Instagram or TikTok DMs (%)" }, { label: "Other (%)" }] },
+    { id: "site_pay_today", type: "multi", q: "How do customers pay for website orders today?",
+      options: ["MoMo, sent manually", "Online payment on the site (e.g. Paystack)", "Bank transfer", "Cash on delivery or pickup", "The site doesn't take orders or payments", "Not sure"] },
+    { id: "site_works", type: "long", q: "What works well on the current website?" },
+    { id: "success", type: "long", q: "Six months after launch, what would make you say the website was a success?" }
+  ]},
+  { id: "deep_orders", title: "More on orders and events", nav: "Orders and events", deep: true, intro: "Details that help me set up ordering properly.", questions: [
+    { id: "order_today", type: "multi", q: "How do customers order from you today?", other: true, options: ["Phone call", "WhatsApp", "Instagram DM", "TikTok DM", "In person"] },
+    { id: "item_options", type: "multi", q: "Do customers need to choose options on an item?", options: ["Protein choice", "Spice level", "Portion size", "Add-ons and extras", "Packaging", "None of these"] },
+    { id: "menu_changes", type: "single", q: "How often does the menu change?", two: true, options: ["Rarely", "Monthly", "Weekly", "Weekly specials", "Seasonal", "Not sure"] },
+    { id: "pick_slot", type: "single", q: "Should customers pick a delivery date and time when ordering?", options: ["Yes", "No", "Not sure"] },
+    { id: "accounts", type: "single", q: "Should customers create an account?", options: ["No, guest checkout only", "Optional account (saves details and order history)", "Account required", "Not sure"] },
+    { id: "quote_needs", type: "multi", q: "What do you need to know before you can send an event quote?", other: true,
+      options: ["Date and time", "Number of guests", "Budget per head", "Venue or location", "Dietary needs", "Service style (packs, buffet, served)", "Staff or setup needed"] },
+    { id: "quotes_invoices", type: "single", q: "Should the website create quotes and invoices you can send to clients?", options: ["Yes, quotes and invoices", "Quotes only", "Invoices only", "No", "Not sure"] },
+    { id: "showcase", type: "single", q: "Should the site show past events (photos, testimonials)?", options: ["Yes", "Only with each client's permission", "No", "Not sure"] },
+    { id: "targets", type: "long", q: "Are there companies, industries or event types you want to go after first?" }
+  ]},
+  { id: "deep_brand", title: "More on running it and the brand", nav: "Running it and brand", deep: true, intro: "The last few details. Nearly there.", questions: [
+    { id: "stages", type: "multi", q: "Which order stages do you want to track?", other: true, options: ["New", "Confirmed", "Paid", "Cooking", "Out for delivery", "Delivered", "Cancelled"] },
+    { id: "customer_updates", type: "multi", q: "Should customers get automatic updates?", options: ["By WhatsApp", "By SMS", "By email", "No updates", "Not sure"] },
+    { id: "track_today", type: "multi", q: "How do you keep track of orders and money today?", other: true, options: ["Notebook", "WhatsApp chats", "Excel or Google Sheets", "An app", "Memory"] },
+    { id: "wa_business", type: "single", q: "Do you use WhatsApp Business?", options: ["Yes", "No, personal WhatsApp", "Not sure"] },
+    { id: "attribution", type: "single", q: "Would you like to see where each order came from (TikTok, Instagram, a referral code)?", options: ["Yes", "No", "Not sure"] },
+    { id: "brand_colours", type: "short", q: "What are your brand colours and fonts, if you have them?" },
+    { id: "content_who", type: "multi", q: "Who will provide the words and photos?", other: true, options: ["Me", "Benedict", "We'll do it together", "A photographer"] },
+    { id: "biz_email", type: "single", q: "Would you like a business email address (e.g. orders@yourdomain)?", options: ["Yes", "No", "Not sure"] },
+    { id: "comfort", type: "matrix", q: "How comfortable are you and your mum with apps?", cols: ["Very comfortable", "Simple apps are fine", "Prefer help"], rows: ["Me", "My mum"] },
+    { id: "certificates", type: "multi", q: "Which certificates could we show on the site to build trust?", options: ["FDA registration", "Food hygiene permit", "Food handler health certificates", "Business registration", "None yet", "Not sure"] },
+    { id: "data_ok", type: "single", q: "Can the website store customer names, phone numbers and addresses?", hint: "Ghana's Data Protection Act, 2012 (Act 843) covers customer data, so customers will be asked for consent.",
+      options: ["Yes, for orders and for offers (with consent)", "Only to complete orders", "Not sure"] },
+    { id: "terms", type: "single", q: "Do you have terms and conditions or a privacy policy?", options: ["Yes", "No, please help me write them", "Not sure"] }
+  ]}
+];
+
+const LAST = { id: "last", title: "Last thing", nav: "Last thing", intro: "Anything I haven't asked about.", questions: [
+  { id: "anything_else", type: "long", q: "Is there anything else I should know about The Food People or how you want to work?" },
+  { id: "questions_for_me", type: "long", q: "Do you have any questions for me?" }
+]};
+
+const ALL_SECTIONS = [...CORE, ...DEEP, LAST];
+
+/* ------------------------------------------------------------------
+   State
+------------------------------------------------------------------- */
+let state = load() || { answers: {}, screen: "welcome", reached: ["welcome"], submittedAt: null };
+let sendResult = null; // "sent" | "failed" | "unconfigured"
+
+function load() {
+  try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : null; } catch (error) { return null; }
+}
+let saveTimer = null;
+function save(flash = true) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (error) { /* private mode: answers stay in memory */ }
+  if (!flash) return;
+  document.querySelectorAll(".saved").forEach((node) => node.classList.add("show"));
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => document.querySelectorAll(".saved").forEach((node) => node.classList.remove("show")), 1400);
+}
+
+const A = () => state.answers;
+function selectedCount(answers, id) {
+  const list = Array.isArray(answers[id]) ? answers[id] : [];
+  return list.length;
+}
+function visible(question) { return !question.showIf || question.showIf(A()); }
+
+function screens() {
+  const list = ["welcome", ...CORE.map((section) => "sec:" + section.id), "gate"];
+  if (A().__deeper === true) list.push(...DEEP.map((section) => "sec:" + section.id));
+  list.push("sec:last", "review", "thanks");
+  return list;
+}
+function sectionFor(key) { return ALL_SECTIONS.find((section) => "sec:" + section.id === key); }
+
+/* ------------------------------------------------------------------
+   Answers: helpers
+------------------------------------------------------------------- */
+function fieldValue(question, field) {
+  const stored = A()[question.id];
+  if (stored && Object.prototype.hasOwnProperty.call(stored, field.label)) return stored[field.label];
+  return field.value || "";
+}
+function isAnswered(question) {
+  const value = A()[question.id];
+  switch (question.type) {
+    case "single": return typeof value === "string" && value !== "";
+    case "multi": return Array.isArray(value) && value.length > 0;
+    case "short": case "long": return (typeof value === "string" && value.trim() !== "") || A()[question.id + "__unsure"] === true;
+    case "fields": return question.fields.some((field) => String(fieldValue(question, field)).trim() !== "");
+    case "matrix": return value && Object.keys(value).length > 0;
+    default: return false;
+  }
+}
+function formatAnswer(question) {
+  const answers = A();
+  const value = answers[question.id];
+  const other = (answers[question.id + "__other"] || "").trim();
+  switch (question.type) {
+    case "single":
+      if (!value) return null;
+      return value === "Other" && other ? "Other: " + other : value;
+    case "multi":
+      if (!Array.isArray(value) || value.length === 0) return null;
+      return value.map((item) => (item === "Other" && other ? "Other: " + other : item)).join(", ");
+    case "short": case "long": {
+      const text = (value || "").trim();
+      const parts = [];
+      if (text) parts.push(text);
+      else if (answers[question.id + "__unsure"]) parts.push("Not sure yet");
+      if (question.help && answers[question.id + "__help"]) parts.push("Would like help writing one.");
+      return parts.length ? parts.join("\n") : null;
+    }
+    case "fields": {
+      const lines = question.fields
+        .map((field) => [field.label, String(fieldValue(question, field)).trim()])
+        .filter(([, text]) => text !== "")
+        .map(([label, text]) => label + ": " + text);
+      return lines.length ? lines.join("\n") : null;
+    }
+    case "matrix": {
+      if (!value) return null;
+      const lines = question.rows.filter((row) => value[row]).map((row) => row + ": " + value[row]);
+      return lines.length ? lines.join("\n") : null;
+    }
+    default: return null;
+  }
+}
+function answeredSections() {
+  const keys = screens();
+  return ALL_SECTIONS.filter((section) => keys.includes("sec:" + section.id)).map((section) => ({
+    section,
+    items: section.questions.filter(visible).map((question) => ({ question, answer: formatAnswer(question) })).filter((item) => item.answer)
+  }));
+}
+function answersAsText() {
+  const when = new Date().toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" });
+  const lines = ["THE FOOD PEOPLE: WEBSITE QUESTIONNAIRE", "From: Laurie", "Completed: " + when, ""];
+  answeredSections().forEach(({ section, items }) => {
+    if (!items.length) return;
+    lines.push(section.title.toUpperCase());
+    items.forEach(({ question, answer }) => {
+      const multiLine = answer.includes("\n");
+      lines.push(section.title + " → " + question.q + ": " + (multiLine ? "\n    " + answer.split("\n").join("\n    ") : answer));
+    });
+    lines.push("");
+  });
+  return lines.join("\n");
+}
+function answersAsHtml() {
+  const when = new Date().toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" });
+  const body = answeredSections().filter(({ items }) => items.length).map(({ section, items }) =>
+    "<section><h2>" + esc(section.title) + "</h2>" +
+    items.map(({ question, answer }) => "<div class=\"item\"><p class=\"q\">" + esc(question.q) + "</p><p class=\"a\">" + esc(answer).replace(/\n/g, "<br>") + "</p></div>").join("") +
+    "</section>").join("");
+  return "<!doctype html><html lang=\"en-GB\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
+    "<title>The Food People: questionnaire answers</title><style>" +
+    "body{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1A2521;background:#FDFBF7;margin:0;padding:32px 20px;line-height:1.5}" +
+    "main{max-width:760px;margin:0 auto}header{background:#0F4C3A;color:#fff;border-radius:14px;padding:28px 28px 24px;margin-bottom:28px}" +
+    "header h1{margin:0 0 6px;font-size:26px;letter-spacing:-0.02em}header p{margin:0;color:#C9D3CE}" +
+    "section{background:#fff;border:1px solid #DCE3DF;border-radius:14px;padding:20px 22px;margin-bottom:16px}" +
+    "h2{font-size:18px;margin:0 0 10px;color:#115E36}.item{padding:8px 0}.item+.item{border-top:1px solid #EEF2EF}" +
+    ".q{margin:0;color:#56625C;font-size:14px}.a{margin:2px 0 0;font-weight:600}</style></head><body><main>" +
+    "<header><h1>The Food People: website questionnaire</h1><p>Answers from Laurie. Completed " + esc(when) + ".</p></header>" +
+    body + "<script type=\"application/json\" id=\"tfp-answers\">" + JSON.stringify(state.answers).replace(/</g, "\\u003c") + "<\/script></main></body></html>";
+}
+
+/* ------------------------------------------------------------------
+   Rendering
+------------------------------------------------------------------- */
+function esc(text) {
+  return String(text).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char]));
+}
+function slug(text) { return String(text).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
+
+function minutesLeft() {
+  const keys = screens();
+  const index = keys.indexOf(state.screen);
+  const weight = { single: 0.2, multi: 0.25, short: 0.3, fields: 0.45, long: 0.55, matrix: 1.2 };
+  let total = 0;
+  keys.slice(Math.max(index, 0)).forEach((key) => {
+    const section = sectionFor(key);
+    if (!section) return;
+    section.questions.filter(visible).forEach((question) => { if (!isAnswered(question)) total += weight[question.type] || 0.3; });
+  });
+  return Math.max(1, Math.round(total));
+}
+function progress() {
+  const keys = screens().filter((key) => key !== "welcome" && key !== "thanks");
+  const index = keys.indexOf(state.screen);
+  if (state.screen === "thanks") return 1;
+  return index < 0 ? 0 : (index + 1) / keys.length;
+}
+function timeLabel() {
+  if (state.screen === "review") return "Ready to send";
+  if (state.screen === "thanks") return "Done";
+  const minutes = minutesLeft();
+  return "About " + minutes + " min left";
+}
+
+function renderShell(inner, { side = true, nav = "" } = {}) {
+  const root = document.getElementById("root");
+  root.innerHTML =
+    "<div class=\"app" + (side ? " with-side" : "") + "\">" +
+      (side ? renderSide() : "") +
+      "<div class=\"main\">" +
+        (side ? "<header class=\"topbar\"><div class=\"topbar-row\"><div class=\"wordmark\">The Food <span>People</span></div>" +
+          "<div class=\"meta\"><span class=\"saved\" aria-live=\"polite\">Saved</span><span class=\"time\">" + esc(timeLabel()) + "</span></div></div>" +
+          "<div class=\"bar\" aria-hidden=\"true\"><i style=\"transform:scaleX(" + progress().toFixed(3) + ")\"></i></div></header>" : "") +
+        "<main id=\"content\" class=\"content\"><div class=\"screen\">" + inner + "</div></main>" +
+        nav +
+      "</div>" +
+    "</div>";
+}
+function renderSide() {
+  const keys = screens();
+  const items = [];
+  CORE.forEach((section) => items.push({ key: "sec:" + section.id, label: section.nav }));
+  items.push({ key: "gate", label: "More detail (optional)", optional: true });
+  if (A().__deeper === true) DEEP.forEach((section) => items.push({ key: "sec:" + section.id, label: section.nav, sub: true }));
+  items.push({ key: "sec:last", label: "Last thing" }, { key: "review", label: "Review and send" });
+  const currentIndex = keys.indexOf(state.screen);
+  return "<aside class=\"side\" aria-label=\"Progress\">" +
+    "<div><div class=\"wordmark\">The Food <span>People</span></div><div class=\"subtitle\">Website questionnaire for Laurie</div></div>" +
+    "<nav aria-label=\"Sections\"><ol class=\"steps\">" +
+    items.map((item) => {
+      const reached = state.reached.includes(item.key);
+      const done = keys.indexOf(item.key) < currentIndex && reached;
+      const current = item.key === state.screen;
+      return "<li><button type=\"button\" data-jump=\"" + item.key + "\"" + (reached ? "" : " disabled") + (current ? " aria-current=\"step\"" : "") + ">" +
+        "<span class=\"tick\" aria-hidden=\"true\">" + (done ? "<i class=\"ph ph-check\"></i>" : "") + "</span>" +
+        (item.sub ? "<span style=\"padding-left:6px\">" + esc(item.label) + "</span>" : esc(item.label)) +
+        (done ? "<span class=\"sr-only\"> (done)</span>" : "") + "</button></li>";
+    }).join("") +
+    "</ol></nav>" +
+    "<div class=\"side-foot\"><div class=\"bar\" aria-hidden=\"true\"><i style=\"transform:scaleX(" + progress().toFixed(3) + ")\"></i></div>" +
+    "<div class=\"meta\"><span class=\"time\">" + esc(timeLabel()) + "</span><span class=\"saved\" aria-live=\"polite\">Saved</span></div>" +
+    "<div class=\"prepared\">Prepared by <strong>Benedict Ampofo Adu</strong></div></div>" +
+    "</aside>";
+}
+function navBar({ back = true, nextLabel = "Continue", nextAction = "next", primary = true } = {}) {
+  return "<nav class=\"nav\" aria-label=\"Questionnaire navigation\"><div class=\"nav-inner\">" +
+    (back ? "<button type=\"button\" class=\"btn btn-ghost\" data-action=\"back\"><i class=\"ph ph-arrow-left\" aria-hidden=\"true\"></i>Back</button>" : "<span></span>") +
+    "<span class=\"spacer\"></span>" +
+    (nextLabel ? "<button type=\"button\" class=\"btn " + (primary ? "btn-primary" : "btn-ghost") + "\" data-action=\"" + nextAction + "\">" + esc(nextLabel) + (nextAction === "next" ? "<i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i>" : "") + "</button>" : "") +
+    "</div></nav>";
+}
+
+function renderQuestion(question) {
+  const answers = A();
+  const id = question.id;
+  const hidden = visible(question) ? "" : " hidden";
+  const hint = question.hint ? "<p class=\"hint\" id=\"h-" + id + "\">" + esc(question.hint) + "</p>" : "";
+  const described = question.hint ? " aria-describedby=\"h-" + id + "\"" : "";
+  const otherOn = (question.type === "single" && answers[id] === "Other") || (question.type === "multi" && Array.isArray(answers[id]) && answers[id].includes("Other"));
+  const otherBox = question.other
+    ? "<div class=\"other\"" + (otherOn ? "" : " hidden") + "><label class=\"sr-only\" for=\"o-" + id + "\">Other, please say</label>" +
+      "<input class=\"text\" id=\"o-" + id + "\" data-other=\"" + id + "\" type=\"text\" placeholder=\"Other, please say\" value=\"" + esc(answers[id + "__other"] || "") + "\"></div>"
+    : "";
+
+  if (question.type === "single") {
+    const options = question.other ? [...question.options.filter((option) => option !== "Not sure"), "Other", ...question.options.filter((option) => option === "Not sure")] : question.options;
+    return "<fieldset class=\"q\" data-q=\"" + id + "\"" + hidden + described + "><legend>" + esc(question.q) + "</legend>" + hint +
+      "<div class=\"control options" + (question.two ? " two" : "") + "\">" +
+      options.map((option, index) => "<label class=\"opt\"><input type=\"radio\" name=\"" + id + "\" value=\"" + esc(option) + "\" id=\"q-" + id + "-" + index + "\"" + (answers[id] === option ? " checked" : "") + "><span class=\"card\">" + esc(option) + "</span></label>").join("") +
+      "</div>" + otherBox + "</fieldset>";
+  }
+  if (question.type === "multi") {
+    const options = question.other ? [...question.options.filter((option) => !/^Not sure/.test(option)), "Other", ...question.options.filter((option) => /^Not sure/.test(option))] : question.options;
+    const selected = Array.isArray(answers[id]) ? answers[id] : [];
+    return "<fieldset class=\"q\" data-q=\"" + id + "\"" + hidden + described + "><legend>" + esc(question.q) + "</legend>" + hint +
+      "<div class=\"control chips\">" +
+      options.map((option, index) => "<label class=\"chip\"><input type=\"checkbox\" name=\"" + id + "\" value=\"" + esc(option) + "\" id=\"q-" + id + "-" + index + "\"" + (selected.includes(option) ? " checked" : "") + "><span>" + esc(option) + "</span></label>").join("") +
+      "</div>" + otherBox + "</fieldset>";
+  }
+  if (question.type === "short" || question.type === "long") {
+    const unsure = answers[id + "__unsure"] === true;
+    const input = question.type === "short"
+      ? "<input class=\"text\" type=\"text\" id=\"q-" + id + "\" data-text=\"" + id + "\" value=\"" + esc(answers[id] || "") + "\"" + (question.placeholder ? " placeholder=\"" + esc(question.placeholder) + "\"" : "") + described + ">"
+      : "<textarea class=\"area\" id=\"q-" + id + "\" data-text=\"" + id + "\"" + (question.placeholder ? " placeholder=\"" + esc(question.placeholder) + "\"" : "") + described + ">" + esc(answers[id] || "") + "</textarea>";
+    const help = question.help
+      ? "<button type=\"button\" class=\"toggle\" data-flag=\"" + id + "__help\" aria-pressed=\"" + (answers[id + "__help"] === true) + "\">" + esc(question.help) + "</button>"
+      : "";
+    return "<div class=\"q\" data-q=\"" + id + "\"" + hidden + "><label class=\"qlabel\" for=\"q-" + id + "\">" + esc(question.q) + "</label>" + hint +
+      "<div class=\"control\">" + input + "</div>" +
+      "<div class=\"unsure\" style=\"gap:8px;flex-wrap:wrap\"><button type=\"button\" class=\"toggle\" data-flag=\"" + id + "__unsure\" aria-pressed=\"" + unsure + "\">Not sure yet</button>" + help + "</div></div>";
+  }
+  if (question.type === "fields") {
+    return "<fieldset class=\"q\" data-q=\"" + id + "\"" + hidden + described + "><legend>" + esc(question.q) + "</legend>" + hint +
+      "<div class=\"control fields\">" +
+      question.fields.map((field, index) => "<div class=\"field\"><label for=\"q-" + id + "-" + index + "\">" + esc(field.label) + "</label>" +
+        "<input class=\"text\" type=\"text\" id=\"q-" + id + "-" + index + "\" data-field=\"" + id + "\" data-label=\"" + esc(field.label) + "\" value=\"" + esc(fieldValue(question, field)) + "\"></div>").join("") +
+      "</div></fieldset>";
+  }
+  if (question.type === "matrix") {
+    const value = answers[id] || {};
+    return "<fieldset class=\"q\" data-q=\"" + id + "\"" + hidden + described + "><legend>" + esc(question.q) + "</legend>" + hint +
+      "<div class=\"control matrix\">" +
+      question.rows.map((row, rowIndex) => "<div class=\"mrow\" role=\"radiogroup\" aria-labelledby=\"m-" + id + "-" + rowIndex + "\"><div class=\"mlabel\" id=\"m-" + id + "-" + rowIndex + "\">" + esc(row) + "</div><div class=\"seg\">" +
+        question.cols.map((col) => "<label><input type=\"radio\" name=\"" + id + "__" + rowIndex + "\" data-matrix=\"" + id + "\" data-row=\"" + esc(row) + "\" value=\"" + esc(col) + "\"" + (value[row] === col ? " checked" : "") + "><span>" + esc(col) + "</span></label>").join("") +
+        "</div></div>").join("") +
+      "</div></fieldset>";
+  }
+  return "";
+}
+
+function renderWelcome() {
+  const resuming = Object.keys(A()).length > 0;
+  const root = document.getElementById("root");
+  const coreMinutes = (() => {
+    const weight = { single: 0.2, multi: 0.25, short: 0.3, fields: 0.45, long: 0.55, matrix: 1.2 };
+    let total = 0;
+    [...CORE, LAST].forEach((section) => section.questions.filter((question) => !question.showIf).forEach((question) => { total += weight[question.type]; }));
+    return Math.round(total);
+  })();
+  root.innerHTML =
+    "<main id=\"content\" class=\"welcome screen\">" +
+      "<section class=\"welcome-hero\">" +
+        "<div class=\"wordmark\">The Food <span>People</span></div>" +
+        "<h1 tabindex=\"-1\">Laurie<span class=\"punct\">,</span> let’s plan your <em>new website<span class=\"punct\">.</span></em></h1>" +
+        "<p class=\"sub\">Your answers shape a site built around how you and your mum actually work.</p>" +
+        "<div class=\"welcome-cta\">" +
+          (resuming
+            ? "<button type=\"button\" class=\"btn btn-primary\" data-action=\"resume\">Continue where you left off<i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></button><button type=\"button\" class=\"linkbtn\" data-action=\"restart\">Start again</button>"
+            : "<button type=\"button\" class=\"btn btn-primary\" data-action=\"start\">Let's start<i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></button>") +
+        "</div>" +
+      "</section>" +
+      "<section class=\"welcome-side\" aria-label=\"What to expect\">" +
+        (HERO_IMAGE ? "<img class=\"hero-img\" src=\"" + esc(HERO_IMAGE) + "\" alt=\"Food by The Food People\">" : "") +
+        "<ul class=\"expect\">" +
+          "<li><i class=\"ph ph-timer\" aria-hidden=\"true\"></i><div><strong>About " + coreMinutes + " minutes</strong><span>Mostly taps. Type only where it helps.</span></div></li>" +
+          "<li><i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i><div><strong>Saves as you go</strong><span>Close it any time and pick up later on the same phone.</span></div></li>" +
+          "<li><i class=\"ph ph-hand-heart\" aria-hidden=\"true\"></i><div><strong>No wrong answers</strong><span>Skip anything, or choose “Not sure”. We'll work it out together.</span></div></li>" +
+          "<li><i class=\"ph ph-map-trifold\" aria-hidden=\"true\"></i><div><strong>What happens next</strong><span>I'll come back with a one-page plan: what launches first, what comes later, and a timeline.</span></div></li>" +
+        "</ul>" +
+        "<div class=\"prepared\">Prepared for The Food People by <strong>Benedict Ampofo Adu</strong>. October 2026.</div>" +
+      "</section>" +
+    "</main>";
+}
+
+function renderSection(section) {
+  const keys = screens();
+  const isLastQuestions = section.id === "last";
+  const inner =
+    "<h1 class=\"title\" tabindex=\"-1\">" + esc(section.title) + "</h1>" +
+    "<p class=\"lede\">" + esc(section.intro) + "</p>" +
+    section.questions.map(renderQuestion).join("");
+  renderShell(inner, { nav: navBar({ back: true, nextLabel: isLastQuestions ? "Review my answers" : "Continue", nextAction: "next" }) });
+}
+
+function renderGate() {
+  const inner =
+    "<h1 class=\"title\" tabindex=\"-1\">That's the essentials done.</h1>" +
+    "<p class=\"lede\">Thank you, Laurie. If you have about 8 more minutes, a few extra details help me get it right first time. Completely optional.</p>" +
+    "<div class=\"gate-card\"><strong>The extra detail covers</strong><ul>" +
+      "<li>How orders and payments work today</li><li>Menu options, accounts and event quotes</li><li>Order stages, brand colours and paperwork</li></ul></div>" +
+    "<div class=\"gate-actions\">" +
+      "<button type=\"button\" class=\"btn btn-primary\" data-action=\"deeper\">Add more detail</button>" +
+      "<button type=\"button\" class=\"btn btn-ghost\" data-action=\"skipdeep\">Skip to the last step</button>" +
+    "</div>";
+  renderShell(inner, { nav: navBar({ back: true, nextLabel: "" }) });
+}
+
+function renderReview(errorMessage) {
+  const groups = answeredSections();
+  const answeredTotal = groups.reduce((sum, group) => sum + group.items.length, 0);
+  const inner =
+    "<h1 class=\"title\" tabindex=\"-1\">Check your answers</h1>" +
+    "<p class=\"lede\">" + (answeredTotal ? "Edit anything before you send it. Skipped questions are fine." : "You haven't answered anything yet. That's fine, but a few answers will help a lot.") + "</p>" +
+    groups.map(({ section, items }) =>
+      "<section class=\"rsec\"><div class=\"rhead\"><h2>" + esc(section.title) + "</h2><button type=\"button\" class=\"linkbtn\" data-jump=\"sec:" + section.id + "\">Edit<span class=\"sr-only\"> " + esc(section.title) + "</span></button></div>" +
+      (items.length ? items.map(({ question, answer }) => "<div class=\"ritem\"><div class=\"rq\">" + esc(question.q) + "</div><div class=\"ra\">" + esc(answer) + "</div></div>").join("") : "<p class=\"rnone\">Skipped</p>") +
+      "</section>").join("") +
+    (errorMessage ? "<p class=\"error\" role=\"alert\">" + esc(errorMessage) + "</p>" : "");
+  renderShell(inner, { nav: navBar({ back: true, nextLabel: "Send to Benedict", nextAction: "submit" }) });
+}
+
+function renderThanks() {
+  const sent = sendResult === "sent" || (sendResult === null && state.submittedAt);
+  const wa = BENEDICT_WHATSAPP.replace(/\D/g, "");
+  const waText = sent ? "Hi Benedict, I've finished the website questionnaire." : "Hi Benedict, I've finished the website questionnaire. My answers are below.";
+  const inner =
+    "<div class=\"thanks-mark\" aria-hidden=\"true\"><i class=\"ph " + (sent ? "ph-check" : "ph-paper-plane-tilt") + "\"></i></div>" +
+    "<h1 class=\"title\" tabindex=\"-1\">" + (sent ? "Thank you, Laurie." : "Nearly there, Laurie.") + "</h1>" +
+    (sent
+      ? "<p class=\"lede\">Your answers are with Benedict. He'll come back to you with a one-page plan: what the site does at launch, what comes later, and a timeline.</p>"
+      : "<p class=\"lede\">Your answers are saved on this device, but they haven't reached Benedict yet. Send them in one of the ways below.</p>" +
+        "<div class=\"notice\">Tap <strong>Copy answers</strong>, then paste them into WhatsApp or an email to Benedict. Or download the file and send it as an attachment.</div>") +
+    "<h2 style=\"font-size:18px;margin:0 0 12px\">" + (sent ? "Keep a copy" : "Send your answers") + "</h2>" +
+    "<div class=\"actions\">" +
+      "<button type=\"button\" class=\"btn btn-primary\" data-action=\"download\"><i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i>Download my answers</button>" +
+      "<button type=\"button\" class=\"btn btn-ghost\" data-action=\"copy\"><i class=\"ph ph-copy\" aria-hidden=\"true\"></i>Copy answers</button>" +
+      (wa ? "<a class=\"btn btn-ghost\" target=\"_blank\" rel=\"noopener\" href=\"https://wa.me/" + wa + "?text=" + encodeURIComponent(waText) + "\"><i class=\"ph ph-whatsapp-logo\" aria-hidden=\"true\"></i>Send on WhatsApp</a>" : "") +
+      (!sent && realKeys().length ? "<button type=\"button\" class=\"btn btn-ghost\" data-action=\"submit\"><i class=\"ph ph-arrow-clockwise\" aria-hidden=\"true\"></i>Try sending again</button>" : "") +
+    "</div>" +
+    "<p class=\"status\" role=\"status\" aria-live=\"polite\"></p>" +
+    "<p style=\"margin-top:28px\"><button type=\"button\" class=\"linkbtn\" data-jump=\"review\">See or edit my answers</button></p>";
+  renderShell(inner, { nav: "" });
+}
+
+function render({ animate = true } = {}) {
+  const key = state.screen;
+  if (key === "welcome") renderWelcome();
+  else if (key === "gate") renderGate();
+  else if (key === "review") renderReview();
+  else if (key === "thanks") renderThanks();
+  else {
+    const section = sectionFor(key);
+    if (section) renderSection(section); else { state.screen = "welcome"; renderWelcome(); }
+  }
+  if (!animate) document.querySelectorAll(".screen").forEach((node) => { node.style.animation = "none"; });
+  const heading = document.querySelector("h1[tabindex]");
+  if (heading) heading.focus({ preventScroll: true });
+  window.scrollTo({ top: 0 });
+}
+
+function go(key) {
+  const current = document.querySelector(".screen");
+  const finish = () => {
+    state.screen = key;
+    if (!state.reached.includes(key)) state.reached.push(key);
+    save(false);
+    render();
+  };
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (current && !reduce) { current.classList.add("leaving"); setTimeout(finish, 170); } else finish();
+}
+function step(direction) {
+  const keys = screens();
+  const index = keys.indexOf(state.screen);
+  let target = keys[index + direction];
+  if (direction < 0 && target === "welcome") target = "welcome";
+  if (target) go(target);
+}
+
+function refreshConditionals() {
+  const key = state.screen;
+  const section = sectionFor(key);
+  if (!section) return;
+  section.questions.forEach((question) => {
+    const node = document.querySelector("[data-q=\"" + question.id + "\"]");
+    if (!node) return;
+    const show = visible(question);
+    if (show && node.hidden) { node.hidden = false; node.classList.add("reveal"); }
+    if (!show && !node.hidden) node.hidden = true;
+  });
+}
+function refreshMeta() {
+  document.querySelectorAll(".time").forEach((node) => { node.textContent = timeLabel(); });
+}
+
+/* ------------------------------------------------------------------
+   Submit
+------------------------------------------------------------------- */
+function realKeys() {
+  return WEB3FORMS_KEYS.map((key) => String(key || "").trim()).filter((key) => key && !/^REPLACE_ME/.test(key));
+}
+async function submit(button) {
+  const keys = realKeys();
+  if (!keys.length) { sendResult = "unconfigured"; go("thanks"); return; }
+  if (button) { button.disabled = true; button.textContent = "Sending..."; }
+  const message = answersAsText();
+  const attempts = keys.map((accessKey) =>
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ access_key: accessKey, subject: EMAIL_SUBJECT, from_name: "The Food People questionnaire", name: "Laurie", message })
+    }).then((response) => response.json().catch(() => ({})).then((json) => response.ok && json.success !== false))
+      .catch(() => false));
+  const results = await Promise.all(attempts);
+  if (results.some(Boolean)) {
+    sendResult = "sent";
+    state.submittedAt = new Date().toISOString();
+    save(false);
+  } else {
+    sendResult = "failed";
+  }
+  go("thanks");
+}
+
+function download() {
+  const blob = new Blob([answersAsHtml()], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "The_Food_People_Questionnaire_Answers.html";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  setStatus("Downloaded. Check your downloads.");
+}
+async function copyAnswers() {
+  const text = answersAsText();
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus("Copied. Paste it into WhatsApp or an email to Benedict.");
+  } catch (error) {
+    const area = document.createElement("textarea");
+    area.value = text; area.setAttribute("readonly", ""); area.style.position = "fixed"; area.style.opacity = "0";
+    document.body.appendChild(area); area.select();
+    const ok = document.execCommand && document.execCommand("copy");
+    area.remove();
+    setStatus(ok ? "Copied. Paste it into WhatsApp or an email to Benedict." : "Copy didn't work here. Please use Download instead.");
+  }
+}
+function setStatus(text) { const node = document.querySelector(".status"); if (node) node.textContent = text; }
+
+/* ------------------------------------------------------------------
+   Events
+------------------------------------------------------------------- */
+const EXCLUSIVE = /^(Not sure|None|No updates)/;
+document.addEventListener("change", (event) => {
+  const target = event.target;
+  const answers = A();
+  if (target.matches("input[type=radio][data-matrix]")) {
+    const id = target.dataset.matrix;
+    answers[id] = Object.assign({}, answers[id], { [target.dataset.row]: target.value });
+  } else if (target.matches("input[type=radio]")) {
+    answers[target.name] = target.value;
+    toggleOther(target.name, target.value === "Other");
+  } else if (target.matches("input[type=checkbox]")) {
+    const id = target.name;
+    let list = Array.isArray(answers[id]) ? [...answers[id]] : [];
+    if (target.checked) {
+      if (EXCLUSIVE.test(target.value)) list = [target.value];
+      else list = list.filter((item) => !EXCLUSIVE.test(item)).concat(target.value);
+    } else list = list.filter((item) => item !== target.value);
+    answers[id] = list;
+    document.querySelectorAll("input[type=checkbox][name=\"" + id + "\"]").forEach((box) => { box.checked = list.includes(box.value); });
+    toggleOther(id, list.includes("Other"));
+  } else return;
+  save();
+  refreshConditionals();
+  refreshMeta();
+});
+function toggleOther(id, on) {
+  const box = document.querySelector("[data-q=\"" + id + "\"] .other");
+  if (!box) return;
+  box.hidden = !on;
+  if (on) { const input = box.querySelector("input"); if (input && document.activeElement !== input) input.focus({ preventScroll: false }); }
+}
+document.addEventListener("input", (event) => {
+  const target = event.target;
+  const answers = A();
+  if (target.dataset.text) answers[target.dataset.text] = target.value;
+  else if (target.dataset.other) answers[target.dataset.other + "__other"] = target.value;
+  else if (target.dataset.field) {
+    const id = target.dataset.field;
+    answers[id] = Object.assign({}, answers[id], { [target.dataset.label]: target.value });
+  } else return;
+  save();
+  refreshMeta();
+});
+document.addEventListener("click", (event) => {
+  const flag = event.target.closest("[data-flag]");
+  if (flag) {
+    const key = flag.dataset.flag;
+    A()[key] = !(A()[key] === true);
+    flag.setAttribute("aria-pressed", String(A()[key]));
+    save(); refreshMeta();
+    return;
+  }
+  const jump = event.target.closest("[data-jump]");
+  if (jump && !jump.disabled) { go(jump.dataset.jump); return; }
+  const actionNode = event.target.closest("[data-action]");
+  if (!actionNode) return;
+  const action = actionNode.dataset.action;
+  if (action === "start") { go(CORE.length ? "sec:" + CORE[0].id : "review"); }
+  else if (action === "resume") { const target = state.reached[state.reached.length - 1]; go(target && target !== "welcome" && target !== "thanks" ? target : "sec:" + CORE[0].id); }
+  else if (action === "restart") {
+    if (window.confirm("Clear your saved answers and start again?")) { state = { answers: {}, screen: "welcome", reached: ["welcome"], submittedAt: null }; save(false); render(); }
+  }
+  else if (action === "next") step(1);
+  else if (action === "back") step(-1);
+  else if (action === "deeper") { A().__deeper = true; save(false); go("sec:" + DEEP[0].id); }
+  else if (action === "skipdeep") { A().__deeper = false; save(false); go("sec:last"); }
+  else if (action === "submit") submit(actionNode);
+  else if (action === "download") download();
+  else if (action === "copy") copyAnswers();
+});
+
+/* Keep the resume point sensible after a reload. */
+if (state.screen === "thanks" && !state.submittedAt) state.screen = "review";
+render({ animate: true });
+</script>
+</body>
+</html>
